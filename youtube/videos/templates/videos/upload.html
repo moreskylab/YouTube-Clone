@@ -118,7 +118,7 @@ $("uploadForm").onsubmit = async e => {
 
         if (data.success) {
             $('uploadStatus').textContent = "Upload complete!"
-            setTimeout(() => location.href = '{% url "videos:list" %}', 500)
+            setTimeout(() => location.href = '{% url "videos:list" %}', 500) // change to list
         } else {
             throw new Error(data.error)
         }

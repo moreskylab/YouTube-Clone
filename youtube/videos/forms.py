@@ -1,5 +1,6 @@
 from django import forms
 
+
 class VideoUploadForm(forms.Form):
 
     title = forms.CharField(
@@ -7,11 +8,10 @@ class VideoUploadForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
-                "placeholder": "Enter Video Title"
+                "placeholder": "Enter video title"
             }
         )
     )
-
     description = forms.CharField(
         required=False,
         widget=forms.Textarea(
@@ -22,14 +22,11 @@ class VideoUploadForm(forms.Form):
             }
         )
     )
-
     video_file = forms.FileField(
-        widget=forms.FileInput(
-            attrs={
-                "class": "form-input",
-                "accept": "video/*"
-            }
-        )
+        widget=forms.FileInput(attrs={
+            "class": "form-input",
+            "accept": "video/*"
+        })
     )
 
     def clean_video_file(self):
@@ -38,8 +35,8 @@ class VideoUploadForm(forms.Form):
             if video.size > 100 * 1024 * 1024:
                 raise forms.ValidationError("Video must be under 100mb")
 
-            allowed_types = ["videos/mp4", "videos/webm", "videos/quicktime", "videos/x-msvideo"]
-            if video.content_ttype not in allowed_types:
-                raise forms.ValidationError("This Video is not allowed")
+            allowed_types = ["video/mp4", "video/webm", "video/quicktime", "video/x-msvideo"]
+            if video.content_type not in allowed_types:
+                raise forms.ValidationError("This video type is not allowed.")
 
         return video
